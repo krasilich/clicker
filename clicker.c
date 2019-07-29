@@ -15,8 +15,12 @@
 #define BUTTON_DDR      DDRD
 #define BUTTON_PORT     PORTD
 #define BUTTON_PIN      PIND
-#define BUTTON_CLICK    PD5
-#define BUTTON_ROW      PD4
+#define BUTTON_CLICK    PD3
+#define BUTTON_ROW      PD2
+
+#define BUZZER_DDR      DDRD
+#define BUZZER_PORT     PORTD
+#define BUZZER          PD4
 
 #define DEBOUNCE_TIME   1
 
@@ -63,7 +67,11 @@ int main(void)
     BUTTON_PORT |= (1 << BUTTON_CLICK);
     BUTTON_PORT |= (1 << BUTTON_ROW);
 
+    BUZZER_DDR |= (1 << BUZZER);
+    BUZZER_PORT &= ~(1 << BUZZER);
+
     while(1) {
+        //TODO: Move to interruption
         if (debouncePress()) {
             if (button_click_pressed == 0) {
                 ++clicks;
